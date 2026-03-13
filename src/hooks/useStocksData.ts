@@ -21,7 +21,7 @@ import vtbImg from '../assets/stocks/vtb.png';
 import x5Img from '../assets/stocks/x5.png';
 import yandexImg from '../assets/stocks/yandex.png';
 
-import { GistResponse } from '../types';
+import { GistResponse, StockItem } from '../types';
 
 export const TICKER_TO_IMAGE: Record<string, string> = {
   SBER: sberImg,
@@ -48,24 +48,21 @@ export const TICKER_TO_IMAGE: Record<string, string> = {
   RU000A105RH2: gazpImg,
   RU000A105KU0: gazpImg,
   RU000A10B3Z3: RU000A10B3Z3Img,
-  MTS: mtsImg,
+  MTSS: mtsImg,
   RU000A100EF5: RU000A10DQA8Img,
   RU000A10D533: RU000A10DQA8Img,
   RU000A108EH4: RU000A10DQA8Img,
 };
 
 export const useStocksData = () => {
-  const [stocks, setStocks] = useState<GistResponse>({ yes: [], no: [] });
+  const [stocks, setStocks] = useState<StockItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://gist.githubusercontent.com/nsdooris/f37fc0d2a764c53dc81cdfd4ba66ac2e/raw/');
+      const response = await fetch('https://gist.githubusercontent.com/nsdooris/ea3ab29e41386b714de2b24cfe71a213/raw/');
       const data = (await response.json()) as GistResponse;
-      setStocks({
-        yes: data.yes.map(item => ({ ...item, img: TICKER_TO_IMAGE[item.ticker] })),
-        no: data.no.map(item => ({ ...item, img: TICKER_TO_IMAGE[item.ticker] })),
-      });
+      setStocks(data.variant1.map(item => ({ ...item, img: TICKER_TO_IMAGE[item.ticker] })));
 
       setLoading(false);
     };
