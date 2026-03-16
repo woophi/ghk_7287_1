@@ -56,7 +56,7 @@ export const App = () => {
             </PureCell.Content>
             <PureCell.Addon verticalAlign="top">
               <Typography.Text view="primary-medium" weight="medium">
-                {(stock.price * stock.nominal).toLocaleString('ru-RU')}&nbsp;{stock.currency || '₽'}
+                {(stock.price * (stock.nominal ?? 1)).toLocaleString('ru-RU')}&nbsp;{stock.currency || '₽'}
               </Typography.Text>
             </PureCell.Addon>
           </PureCell>
